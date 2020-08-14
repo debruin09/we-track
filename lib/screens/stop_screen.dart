@@ -10,6 +10,28 @@ class StopScreen extends StatelessWidget {
   StopScreen({Key key, this.route}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Future _showAlertBox(context) async {
+      await showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Notification"),
+              content: Text("Notification has been send"),
+              actions: [
+                FlatButton.icon(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.cancel,
+                      color: Colors.red,
+                    ),
+                    label: Text("cancel"))
+              ],
+            );
+          });
+    }
+
     return Scaffold(
         backgroundColor: tertiaryColor,
         appBar: AppBar(
@@ -25,19 +47,24 @@ class StopScreen extends StatelessWidget {
           child: Container(
             color: Colors.redAccent,
             child: Builder(
-              builder: (context) => ListTile(
-                onTap: () {
-                  notificationBloc.add(AddNotification(
-                      MyNotification(alert: "Alert", id: "$route")));
+              builder: (context) => MaterialButton(
+                onPressed: () {
+                  notificationBloc.add(AddNotification(MyNotification(
+                      alert: "Driver reaches stop: $route", id: "$route")));
                   print("Made request");
+                  _showAlertBox(context);
                   Scaffold.of(context).showSnackBar(SnackBar(
                     backgroundColor: primaryColor,
-                    content: Text('Stop send'),
+                    content: Text(
+                      'Stop send successful',
+                      style: TextStyle(color: secondaryColor),
+                    ),
                     duration: Duration(seconds: 3),
                   ));
                 },
-                title: Text(
-                  "STOP",
+                minWidth: double.infinity,
+                child: Text(
+                  "Stop Notification",
                   style: TextStyle(color: tertiaryColor),
                 ),
               ),
