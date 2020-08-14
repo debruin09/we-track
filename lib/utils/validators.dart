@@ -35,13 +35,13 @@ class Validators {
     if (newRoute == "route 1") {
       return true;
     }
-    if (newRoute == "routte 2") {
+    if (newRoute == "route 2") {
       return true;
     }
     if (newRoute == "route 3") {
       return true;
     }
-    if (newRoute == "routte 4") {
+    if (newRoute == "route 4") {
       return true;
     }
     return false;
