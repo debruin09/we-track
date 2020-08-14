@@ -24,15 +24,22 @@ class StopScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
           child: Container(
             color: Colors.redAccent,
-            child: ListTile(
-              onTap: () {
-                notificationBloc.add(AddNotification(
-                    MyNotification(alert: "Alert", id: "$route")));
-                print("Made request");
-              },
-              title: Text(
-                "STOP",
-                style: TextStyle(color: tertiaryColor),
+            child: Builder(
+              builder: (context) => ListTile(
+                onTap: () {
+                  notificationBloc.add(AddNotification(
+                      MyNotification(alert: "Alert", id: "$route")));
+                  print("Made request");
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    backgroundColor: primaryColor,
+                    content: Text('Stop send'),
+                    duration: Duration(seconds: 3),
+                  ));
+                },
+                title: Text(
+                  "STOP",
+                  style: TextStyle(color: tertiaryColor),
+                ),
               ),
             ),
           ),
