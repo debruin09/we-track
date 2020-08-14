@@ -10,12 +10,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/register_bloc/register_event.dart';
 
+/// This is the register form UI
 class RegisterForm extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<RegisterForm> {
+  /// Initializing text controllers that controls the input of the user
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _typeController = TextEditingController();

@@ -1,3 +1,4 @@
+/// This is the validator that checks the users input on the register and login screen
 class Validators {
   static final RegExp _emailRegExp = RegExp(
     r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',

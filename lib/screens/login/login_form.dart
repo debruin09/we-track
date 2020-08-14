@@ -10,6 +10,7 @@ import 'package:we_track/widgets/gradient_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// This is the register form UI
 class LoginForm extends StatefulWidget {
   final UserRepository _userRepository;
 
@@ -22,6 +23,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  /// Initializing text controllers that controls the input of the user
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 

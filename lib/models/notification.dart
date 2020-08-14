@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// This is just the Notification model class
 class MyNotification {
   String alert;
   String id;

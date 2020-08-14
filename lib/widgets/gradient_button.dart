@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:we_track/shared/themes.dart/themes.dart';
 
+/// This is the button that displays when the user register or login
 class CustomButton extends StatelessWidget {
   final double width;
   final double height;

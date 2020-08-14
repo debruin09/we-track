@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:we_track/shared/themes.dart/themes.dart';
 
+/// This is the opening screen that will display when the app starts
 class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

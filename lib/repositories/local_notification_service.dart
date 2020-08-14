@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:study_buddy/src/ui/navigations/navigations.dart';
 
+/// This is the local notification that will show when the student receives a notification
 class LocalNotificationService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();

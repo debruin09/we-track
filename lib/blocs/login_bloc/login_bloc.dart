@@ -4,6 +4,7 @@ import 'package:we_track/repositories/user_repository.dart';
 import 'package:we_track/utils/validators.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// This is the login bloc that maps incoming login events to states
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository _userRepository;
 

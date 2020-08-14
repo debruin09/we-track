@@ -9,6 +9,7 @@ import 'package:we_track/shared/themes.dart/themes.dart';
 
 import '../injection.dart';
 
+/// This is the driver screen UI
 class DriverMenuScreen extends StatefulWidget {
   final User user;
 
@@ -19,6 +20,7 @@ class DriverMenuScreen extends StatefulWidget {
 }
 
 class _DriverMenuScreenState extends State<DriverMenuScreen> {
+  /// This is the notification which will allow the student to listen if there is a notification
   final notificationBloc = locator.get<NotificationBloc>();
 
   @override
@@ -40,6 +42,7 @@ class _DriverMenuScreenState extends State<DriverMenuScreen> {
         actions: [
           FlatButton(
               onPressed: () {
+                /// This will allow the user to log out
                 BlocProvider.of<AuthenticationBloc>(context)
                     .add(AuthenticationLoggedOut());
               },

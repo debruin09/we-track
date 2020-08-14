@@ -6,6 +6,7 @@ import 'package:we_track/widgets/curved_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Login Screen UI
 class LoginScreen extends StatelessWidget {
   final UserRepository _userRepository;
 

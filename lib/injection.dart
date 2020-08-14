@@ -6,6 +6,7 @@ import 'package:we_track/repositories/user_repository.dart';
 
 final locator = GetIt.instance;
 
+/// The dependancy injection locator which will inject these class where they are needed
 void setupLocator() {
   ///[Registered Repositories]
   locator.registerFactory<UserRepository>(() => UserRepository());

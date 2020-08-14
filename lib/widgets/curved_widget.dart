@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///  This is the curved display for the UI on the login and register screen
 class CurvedWidget extends StatelessWidget {
   final Widget child;
   final double curvedDistance;

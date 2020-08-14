@@ -6,6 +6,7 @@ import 'package:we_track/widgets/curved_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// This is the register UI
 class RegisterScreen extends StatelessWidget {
   final UserRepository _userRepository;
 

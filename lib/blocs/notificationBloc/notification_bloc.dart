@@ -10,6 +10,7 @@ import 'package:we_track/repositories/firestore_service.dart';
 part 'notification_event.dart';
 part 'notification_state.dart';
 
+/// This is the notification bloc that maps incoming notifications events to states
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   NotificationBloc(this.databaseRepository) : super(NotificationInitial());
   final FirestoreService databaseRepository;

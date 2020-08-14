@@ -1,3 +1,4 @@
+// This is the user model class
 class User {
   String email;
   String password;

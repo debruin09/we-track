@@ -10,6 +10,7 @@ import 'package:we_track/repositories/local_notification_service.dart';
 import 'package:we_track/shared/themes.dart/themes.dart';
 import 'package:we_track/shared/widgets/shared_widgets.dart';
 
+/// This is the student screen UI
 class StudentMenuScreen extends StatefulWidget {
   final User user;
 
@@ -20,9 +21,14 @@ class StudentMenuScreen extends StatefulWidget {
 }
 
 class _StudentMenuScreenState extends State<StudentMenuScreen> {
+  /// This is the notification which will allow the student to listen if there is a notification
   final notificationBloc = locator.get<NotificationBloc>();
+
+  /// This will show a notification when there is one
   final localNotificationService = locator.get<LocalNotificationService>();
 
+  /// This function will trigger a load notification which means
+  /// that all students can now subscribe to a notification
   @override
   void initState() {
     notificationBloc.add(LoadNotification());
@@ -32,8 +38,8 @@ class _StudentMenuScreenState extends State<StudentMenuScreen> {
 
   @override
   void dispose() {
-    notificationBloc.add(DeleteNotification(
-        MyNotification(alert: "Alert", id: '${widget.user.route}')));
+    notificationBloc.add(DeleteNotification(MyNotification(
+        alert: "Driver reaches stop:", id: "${widget.user.route}")));
     super.dispose();
   }
 

@@ -5,6 +5,7 @@ import 'package:we_track/utils/validators.dart';
 
 import 'register_event.dart';
 
+/// This is the registtation bloc that maps the register events to states
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final UserRepository _userRepository;
 
