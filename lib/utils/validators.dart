@@ -12,6 +12,9 @@ class Validators {
   static final RegExp _passwordRegExp = RegExp(
     r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
   );
+  static final RegExp _driverCodeRegExp = RegExp(
+    r'^[0-9]{4}$',
+  );
 
   static isValidEmail(String email) {
     return _emailRegExp.hasMatch(email);
@@ -19,6 +22,20 @@ class Validators {
 
   static isValidUsername(String username) {
     return _usernameRegExp.hasMatch(username);
+  }
+
+  /// Driver codes: [1342, 3674, 9006, 6348]
+  static isValidDriverCode(String code) {
+    if (code == '1342') {
+      return true;
+    } else if (code == "3674") {
+      return true;
+    } else if (code == "9006") {
+      return true;
+    } else if (code == "6348") {
+      return true;
+    }
+    return false;
   }
 
   static isValidType(String type) {

@@ -38,6 +38,11 @@ class UserRepository {
     );
   }
 
+  /// Reset the users password by sending a email to the email
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
   /// This will log the user out
   Future<void> signOut() async {
     return Future.wait([_firebaseAuth.signOut()]);

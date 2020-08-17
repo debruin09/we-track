@@ -20,6 +20,7 @@ void main() {
   /// This is the dependancy injection locator that needs to be set up
   setupLocator();
 
+
   ///This will start the app]
   ///When the app starts it will call the authentication bloc which will add the authentication started event
   runApp(

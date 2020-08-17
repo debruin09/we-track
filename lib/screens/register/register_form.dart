@@ -4,6 +4,7 @@ import 'package:we_track/blocs/register_bloc/register_bloc.dart';
 import 'package:we_track/blocs/register_bloc/register_event.dart';
 import 'package:we_track/blocs/register_bloc/register_state.dart';
 import 'package:we_track/shared/themes.dart/themes.dart';
+import 'package:we_track/utils/validators.dart';
 import 'package:we_track/widgets/gradient_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,7 @@ class _LoginFormState extends State<RegisterForm> {
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _routeController = TextEditingController();
+  final TextEditingController _driverCodeController = TextEditingController();
 
   bool get isPopulated =>
       _emailController.text.isNotEmpty &&
@@ -166,6 +168,22 @@ class _LoginFormState extends State<RegisterForm> {
                           : null;
                     },
                   ),
+                  _typeController.text == "driver"
+                      ? TextFormField(
+                          controller: _driverCodeController,
+                          decoration: InputDecoration(
+                            icon: Icon(Icons.verified_user),
+                            labelText: "4 Digit code",
+                          ),
+                          autovalidate: true,
+                          autocorrect: false,
+                          validator: (val) {
+                            return !Validators.isValidDriverCode(val)
+                                ? 'Eg. 1234'
+                                : null;
+                          },
+                        )
+                      : Container(),
                   SizedBox(
                     height: 30,
                   ),
@@ -174,7 +192,14 @@ class _LoginFormState extends State<RegisterForm> {
                     height: 45,
                     onPressed: () {
                       if (isButtonEnabled(state)) {
-                        _onFormSubmitted();
+                        if (_typeController.text == "driver" &&
+                            Validators.isValidDriverCode(
+                                    _driverCodeController.text) ==
+                                true) {
+                          _onFormSubmitted();
+                        } else if (_typeController.text == "student") {
+                          _onFormSubmitted();
+                        }
                       }
                     },
                     text: Text(

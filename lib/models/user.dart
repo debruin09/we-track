@@ -28,7 +28,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(email: $email, password: $password, username: $username, uid: $uid, route: $route, type: $type)';
+    return 'User(email: $email, password: $password, username: $username, uid: $uid, route: $route, type: $type,)';
   }
 
   factory User.fromMap(Map<String, dynamic> map) {

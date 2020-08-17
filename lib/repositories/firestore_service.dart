@@ -69,7 +69,6 @@ class FirestoreService {
 
   /// When a user is created in the database
   /// all this does is fetch that users data from that database
-  @override
   Future getUser(String uid) async {
     try {
       final userData = await userCollection.document(uid).get();
