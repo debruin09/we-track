@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:we_track/blocs/forgotPasswordBloc/forgotpassword_bloc.dart';
 import 'package:we_track/blocs/notificationBloc/notification_bloc.dart';
 import 'package:we_track/repositories/firestore_service.dart';
 import 'package:we_track/repositories/local_notification_service.dart';
@@ -16,4 +17,6 @@ void setupLocator() {
 
   ///[Registered Blocs]
   locator.registerFactory<NotificationBloc>(() => NotificationBloc(locator()));
+  locator.registerFactory<ForgotPasswordBloc>(
+      () => ForgotPasswordBloc(userRepository: locator()));
 }

@@ -4,7 +4,7 @@ import 'package:we_track/blocs/login_bloc/login_bloc.dart';
 import 'package:we_track/blocs/login_bloc/login_event.dart';
 import 'package:we_track/blocs/login_bloc/login_state.dart';
 import 'package:we_track/repositories/user_repository.dart';
-import 'package:we_track/screens/forgot_password_screen.dart';
+import 'package:we_track/screens/forgotPassword/forgot_password_screen.dart';
 import 'package:we_track/screens/register/register_screen.dart';
 import 'package:we_track/shared/themes.dart/themes.dart';
 import 'package:we_track/widgets/gradient_button.dart';

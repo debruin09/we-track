@@ -4,6 +4,7 @@ import 'package:we_track/models/user.dart';
 
 class FirestoreService {
   final userCollection = Firestore.instance.collection("users");
+  final testCollection = Firestore.instance.collection("test");
   final notificationCollection = Firestore.instance.collection("alerts");
   final String uid;
   FirestoreService({this.uid});
@@ -19,6 +20,24 @@ class FirestoreService {
     String type,
   }) async {
     return await userCollection.document(uid).setData({
+      "uid": uid,
+      "password": password,
+      "username": username,
+      "route": route.toLowerCase(),
+      "email": email,
+      "type": type,
+    });
+  }
+
+  Future updateTestData({
+    String uid,
+    String username,
+    String route,
+    String email,
+    String password,
+    String type,
+  }) async {
+    return await testCollection.document(uid).setData({
       "uid": uid,
       "password": password,
       "username": username,
@@ -72,6 +91,16 @@ class FirestoreService {
   Future getUser(String uid) async {
     try {
       final userData = await userCollection.document(uid).get();
+      return User.fromMap(userData.data);
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+    }
+  }
+
+  Future getTest(String uid) async {
+    try {
+      final userData = await testCollection.document(uid).get();
       return User.fromMap(userData.data);
     } catch (e) {
       print(e.toString());

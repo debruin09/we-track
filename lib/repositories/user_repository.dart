@@ -28,7 +28,7 @@ class UserRepository {
     );
 
     /// Once the user is registered or authenticated their data will be added to the database
-    await FirestoreService(uid: result.user.uid).updateUserData(
+    await FirestoreService(uid: result.user.uid).updateTestData(
       email: email,
       password: password,
       type: type,
@@ -38,7 +38,7 @@ class UserRepository {
     );
   }
 
-  /// Reset the users password by sending a email to the email
+  /// Reset the users password by sending a email to the user
   Future<void> resetPassword(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
@@ -69,7 +69,7 @@ class UserRepository {
         .currentUser()
         .then((user) => _userFromFirebase(user));
     final User user =
-        await FirestoreService(uid: result.uid).getUser(result.uid);
+        await FirestoreService(uid: result.uid).getTest(result.uid);
     return user;
   }
 }

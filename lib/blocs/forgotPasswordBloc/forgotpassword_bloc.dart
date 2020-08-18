@@ -2,36 +2,46 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:we_track/repositories/user_repository.dart';
+import 'package:we_track/utils/validators.dart';
 
 part 'forgotpassword_event.dart';
 part 'forgotpassword_state.dart';
 
-class ForgotpasswordBloc
-    extends Bloc<ForgotpasswordEvent, ForgotpasswordState> {
+class ForgotPasswordBloc
+    extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
   final UserRepository _userRepository;
 
-  ForgotpasswordBloc({UserRepository userRepository})
+  ForgotPasswordBloc({UserRepository userRepository})
       : _userRepository = userRepository,
-        super(ForgotpasswordInitial());
+        super(ForgotPasswordState.initial());
 
   @override
-  Stream<ForgotpasswordState> mapEventToState(
-    ForgotpasswordEvent event,
+  Stream<ForgotPasswordState> mapEventToState(
+    ForgotPasswordEvent event,
   ) async* {
-    if (event is ForgotPasswordPressed) {
-      yield* _mapForgotPasswordPressedToState(email: event.email);
+    if (event is ForgotPasswordEmailChanged) {
+      yield* _mapForgotPasswordEmailChangeState(event.email);
+    } else if (event is ForgotPasswordSubmitted) {
+      yield* _mapForgotPasswordSubmittedState(email: event.email);
     }
   }
 
-  Stream<ForgotpasswordState> _mapForgotPasswordPressedToState(
+  Stream<ForgotPasswordState> _mapForgotPasswordEmailChangeState(
+      String email) async* {
+    yield state.update(isEmailValid: Validators.isValidEmail(email));
+  }
+
+  Stream<ForgotPasswordState> _mapForgotPasswordSubmittedState(
       {String email}) async* {
-    yield LoadingForgotPasswordState();
+    yield ForgotPasswordState.loading();
     try {
       await _userRepository.resetPassword(email);
-      yield ForgotPasswordSuccess();
-    } catch (e) {
-      yield ForgotPasswordFailure(message: e.toString());
+      yield ForgotPasswordState.success();
+    } catch (error) {
+      print(error);
+      yield ForgotPasswordState.failure();
     }
   }
 }
