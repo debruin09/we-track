@@ -41,12 +41,16 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   }
 
   Stream<NotificationState> _mapLoadNotificationToState() async* {
-    _notificationSubscription?.cancel();
-    _notificationSubscription = databaseRepository.notifications().listen(
-      (notifications) {
-        add(NotificationUpdated(notifications));
-      },
-    );
+    try {
+      _notificationSubscription?.cancel();
+      _notificationSubscription = databaseRepository.notifications().listen(
+        (notifications) {
+          add(NotificationUpdated(notifications));
+        },
+      );
+    } catch (e) {
+      yield NotificationErrorState(message: e.toString());
+    }
   }
 
   Stream<NotificationState> _mapAddNotificationToState(

@@ -38,8 +38,8 @@ class _StudentMenuScreenState extends State<StudentMenuScreen> {
 
   @override
   void dispose() {
-    notificationBloc.add(DeleteNotification(MyNotification(
-        alert: "Driver reaches stop:", id: "${widget.user.route}")));
+    // notificationBloc.add(DeleteNotification(MyNotification(
+    //     alert: "Driver reaches stop:", id: "${widget.user.route}")));
     super.dispose();
   }
 
@@ -81,15 +81,31 @@ class _StudentMenuScreenState extends State<StudentMenuScreen> {
               } else if (state is NotificationLoadInProgress) {
                 return Loading();
               } else if (state is NotificationLoadSuccess) {
-                var x = state.notifications.map((e) => e).firstWhere((element) {
-                  return element.id == widget.user.route;
-                }, orElse: () => null);
+                var x = state.notifications.map((e) => e).where((element) {
+                  return element.route == widget.user.route;
+                });
 
-                if (x != null) {
+                List<MyNotification> notifications =
+                    List<MyNotification>.from(x);
+
+                List<DateTime> dates = [];
+                notifications.forEach((e) {
+                  dates.add(DateTime.parse(e.date));
+                });
+
+                var y = state.notifications.map((e) => e).where((element) {
+                  return element.route == widget.user.route &&
+                      element.date == dates.last.toIso8601String().toString();
+                });
+
+                List<MyNotification> d = List<MyNotification>.from(y);
+
+                print("This is x: $notifications");
+                if (y != null && x != null && d.isNotEmpty) {
                   localNotificationService.notification();
                   return Column(
                     children: [
-                      Text("${widget.user.route}",
+                      Text("${widget.user.route}: ${widget.user.stop}",
                           style: TextStyle(
                               fontSize: 20.0, fontWeight: FontWeight.bold)),
                       Padding(
@@ -99,7 +115,7 @@ class _StudentMenuScreenState extends State<StudentMenuScreen> {
                           color: Colors.redAccent,
                           child: ListTile(
                             title: Text(
-                              "${x.alert}",
+                              "${d.first.alert}" ?? 'no notification',
                               style: TextStyle(color: tertiaryColor),
                             ),
                           ),
@@ -107,6 +123,8 @@ class _StudentMenuScreenState extends State<StudentMenuScreen> {
                       ),
                     ],
                   );
+                } else if (state is NotificationErrorState) {
+                  return Center(child: Text("No notifications"));
                 }
                 return Center(child: Text("No notifications"));
               }

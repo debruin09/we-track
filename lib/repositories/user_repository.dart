@@ -19,6 +19,7 @@ class UserRepository {
   Future<void> signUp(
       {String username,
       String email,
+      String stop,
       String password,
       String type,
       String route}) async {
@@ -31,8 +32,9 @@ class UserRepository {
     await FirestoreService(uid: result.user.uid).updateUserData(
       email: email,
       password: password,
-      type: type,
-      route: route,
+      type: type ?? "",
+      route: route ?? "",
+      stop: stop ?? "",
       uid: result.user.uid,
       username: username,
     );

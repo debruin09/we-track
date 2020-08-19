@@ -3,22 +3,22 @@ class RegisterState {
   final bool isUsernameValid;
   final bool isTypeValid;
   final bool isRouteValid;
+  final bool isStopValid;
   final bool isPasswordValid;
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
 
   bool get isFormValid =>
-      isEmailValid &&
-      isPasswordValid &&
-      isUsernameValid &&
-      isTypeValid &&
-      isRouteValid;
+      isEmailValid && isPasswordValid && isUsernameValid && isTypeValid ||
+      isRouteValid ||
+      isStopValid;
 
   RegisterState(
       {this.isEmailValid,
       this.isRouteValid,
       this.isUsernameValid,
+      this.isStopValid,
       this.isTypeValid,
       this.isPasswordValid,
       this.isSubmitting,
@@ -30,6 +30,7 @@ class RegisterState {
       isEmailValid: true,
       isUsernameValid: true,
       isTypeValid: true,
+      isStopValid: true,
       isRouteValid: true,
       isPasswordValid: true,
       isSubmitting: false,
@@ -44,6 +45,7 @@ class RegisterState {
       isUsernameValid: true,
       isRouteValid: true,
       isTypeValid: true,
+      isStopValid: true,
       isPasswordValid: true,
       isSubmitting: true,
       isSuccess: false,
@@ -56,6 +58,7 @@ class RegisterState {
       isEmailValid: true,
       isUsernameValid: true,
       isRouteValid: true,
+      isStopValid: true,
       isTypeValid: true,
       isPasswordValid: true,
       isSubmitting: false,
@@ -69,6 +72,7 @@ class RegisterState {
       isEmailValid: true,
       isUsernameValid: true,
       isRouteValid: true,
+      isStopValid: true,
       isTypeValid: true,
       isPasswordValid: true,
       isSubmitting: false,
@@ -81,6 +85,7 @@ class RegisterState {
     bool isEmailValid,
     bool isUsernameValid,
     bool isRouteValid,
+    bool isStopValid,
     bool isTypeValid,
     bool isPasswordValid,
   }) {
@@ -88,6 +93,7 @@ class RegisterState {
       isEmailValid: isEmailValid,
       isUsernameValid: isUsernameValid,
       isTypeValid: isTypeValid,
+      isStopValid: isStopValid,
       isRouteValid: isRouteValid,
       isPasswordValid: isPasswordValid,
       isSubmitting: false,
@@ -101,6 +107,7 @@ class RegisterState {
     bool isUsernameValid,
     bool isRouteValid,
     bool isTypeValid,
+    bool isStopValid,
     bool isPasswordValid,
     bool isSubmitting,
     bool isSuccess,
@@ -111,6 +118,7 @@ class RegisterState {
       isUsernameValid: isUsernameValid ?? this.isUsernameValid,
       isTypeValid: isTypeValid ?? this.isTypeValid,
       isRouteValid: isRouteValid ?? this.isRouteValid,
+      isStopValid: isStopValid ?? this.isStopValid,
       isPasswordValid: isPasswordValid ?? this.isPasswordValid,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,

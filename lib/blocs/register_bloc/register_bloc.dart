@@ -25,12 +25,16 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       yield* _mapRegisterTypeChangeToState(event.type);
     } else if (event is RegisterRouteChanged) {
       yield* _mapRegisterRouteChangeToState(event.route);
+    } else if (event is RegisterStopChanged) {
+      print("From bloc: ${event.stop}");
+      yield* _mapRegisterStopChangeToState(event.stop);
     } else if (event is RegisterSubmitted) {
       yield* _mapRegisterSubmittedToState(
           email: event.email,
           password: event.password,
           username: event.username,
           route: event.route,
+          stop: event.stop,
           type: event.type);
     }
   }
@@ -53,6 +57,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     yield state.update(isPasswordValid: Validators.isValidPassword(password));
   }
 
+  Stream<RegisterState> _mapRegisterStopChangeToState(String stop) async* {
+    yield state.update(isStopValid: true);
+  }
+
   Stream<RegisterState> _mapRegisterRouteChangeToState(String route) async* {
     yield state.update(isRouteValid: Validators.isValidRoute(route));
   }
@@ -62,6 +70,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       String password,
       String username,
       String type,
+      String stop,
       String route}) async* {
     yield RegisterState.loading();
     try {
@@ -70,6 +79,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           username: username,
           type: type,
           password: password,
+          stop: stop,
           route: route);
       yield RegisterState.success();
     } catch (error) {

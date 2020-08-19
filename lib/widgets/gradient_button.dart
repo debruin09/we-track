@@ -41,3 +41,39 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
+
+class ChatButton extends StatelessWidget {
+  final Function onPressed;
+  final Text text;
+
+  const ChatButton({
+    Key key,
+    this.onPressed,
+    this.text,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100.0,
+      height: 60.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(80),
+        color: secondaryColor,
+      ),
+      child: MaterialButton(
+          onPressed: this.onPressed,
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          shape: StadiumBorder(),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                text,
+              ],
+            ),
+          )),
+    );
+  }
+}

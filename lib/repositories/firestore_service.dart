@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:we_track/models/chat.dart';
 import 'package:we_track/models/notification.dart';
 import 'package:we_track/models/user.dart';
 
 class FirestoreService {
   final userCollection = Firestore.instance.collection("users");
-  final notificationCollection = Firestore.instance.collection("alerts");
+  final notificationCollection = Firestore.instance.collection("notification");
+  final chatCollection = Firestore.instance.collection("messages");
   final String uid;
   FirestoreService({this.uid});
 
@@ -13,6 +15,7 @@ class FirestoreService {
   Future updateUserData({
     String uid,
     String username,
+    String stop,
     String route,
     String email,
     String password,
@@ -22,6 +25,7 @@ class FirestoreService {
       "uid": uid,
       "password": password,
       "username": username,
+      "stop": stop,
       "route": route.toLowerCase(),
       "email": email,
       "type": type,
@@ -32,7 +36,6 @@ class FirestoreService {
   /// ill trigger and then add the notification to the database.
   /// The student will then subscribe to the notification and receive it.
   Future<void> addNotification(MyNotification notification) async {
-    print("Added : $notification");
     return await notificationCollection
         .document(notification.id)
         .setData(notification.toMap());
@@ -47,7 +50,7 @@ class FirestoreService {
   /// it detects a change it will then receive that data from the database
   Stream<List<MyNotification>> notifications() {
     try {
-      return notificationCollection.snapshots().map((snapshot) {
+      return notificationCollection.orderBy("date").snapshots().map((snapshot) {
         return snapshot.documents
             .map((doc) => MyNotification.fromSnapshot(doc))
             .toList();
@@ -77,5 +80,19 @@ class FirestoreService {
       print(e.toString());
       return e.toString();
     }
+  }
+
+  Stream<List<Chat>> chats() {
+    try {
+      return chatCollection.orderBy("date").snapshots().map(
+          (q) => q.documents.map((doc) => Chat.fromSnapShot(doc)).toList());
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<void> newChat(Chat chat) async {
+    chatCollection.add(chat.toMap());
   }
 }

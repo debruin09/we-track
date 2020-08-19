@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 // This is the user model class
 class User {
   String email;
@@ -6,6 +8,7 @@ class User {
   String uid;
   String route;
   String type;
+  String stop;
   User({
     this.email,
     this.password,
@@ -13,6 +16,7 @@ class User {
     this.uid,
     this.route,
     this.type,
+    this.stop,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,12 +27,13 @@ class User {
       'uid': uid,
       'route': route,
       'type': type,
+      'stop': stop ?? "",
     };
   }
 
   @override
   String toString() {
-    return 'User(email: $email, password: $password, username: $username, uid: $uid, route: $route, type: $type,)';
+    return 'User(email: $email, password: $password, username: $username, uid: $uid, route: $route, type: $type, stop: $stop)';
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
@@ -41,6 +46,7 @@ class User {
       uid: map['uid'],
       route: map['route'],
       type: map['type'],
+      stop: map['stop'] ?? "",
     );
   }
 }

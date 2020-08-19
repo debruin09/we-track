@@ -50,16 +50,31 @@ class RegisterPasswordChanged extends RegisterEvent {
   List<Object> get props => [password];
 }
 
+class RegisterStopChanged extends RegisterEvent {
+  final String stop;
+
+  RegisterStopChanged({this.stop});
+
+  @override
+  List<Object> get props => [stop];
+}
+
 class RegisterSubmitted extends RegisterEvent {
   final String email;
   final String password;
   final String username;
   final String type;
   final String route;
+  final String stop;
 
   RegisterSubmitted(
-      {this.email, this.password, this.username, this.type, this.route});
+      {this.email,
+      this.password,
+      this.username,
+      this.type,
+      this.route,
+      this.stop});
 
   @override
-  List<Object> get props => [email, password, username, type, route];
+  List<Object> get props => [email, password, username, type, route, stop];
 }

@@ -3,6 +3,7 @@ import 'package:we_track/blocs/authentication_bloc/authentication_event.dart';
 import 'package:we_track/blocs/register_bloc/register_bloc.dart';
 import 'package:we_track/blocs/register_bloc/register_event.dart';
 import 'package:we_track/blocs/register_bloc/register_state.dart';
+import 'package:we_track/helpers/stop_helpers.dart';
 import 'package:we_track/shared/themes.dart/themes.dart';
 import 'package:we_track/utils/validators.dart';
 import 'package:we_track/widgets/gradient_button.dart';
@@ -25,12 +26,14 @@ class _LoginFormState extends State<RegisterForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _routeController = TextEditingController();
   final TextEditingController _driverCodeController = TextEditingController();
+  final TextEditingController _stopController = TextEditingController();
+  String _selectedStop;
 
   bool get isPopulated =>
       _emailController.text.isNotEmpty &&
-      _passwordController.text.isNotEmpty &&
-      _usernameController.text.isNotEmpty &&
-      _typeController.text.isNotEmpty &&
+          _passwordController.text.isNotEmpty &&
+          _usernameController.text.isNotEmpty &&
+          _typeController.text.isNotEmpty ||
       _routeController.text.isNotEmpty;
 
   bool isButtonEnabled(RegisterState state) {
@@ -52,6 +55,7 @@ class _LoginFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    //  routes["route 1"].map((e) => DropdownMenuItem(child: null));
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
         if (state.isFailure) {
@@ -168,6 +172,26 @@ class _LoginFormState extends State<RegisterForm> {
                           : null;
                     },
                   ),
+                  _typeController.text == "student" &&
+                          routes.containsKey(_routeController.text)
+                      ? DropdownButton<String>(
+                          value: _selectedStop,
+                          items: _typeController.text != "student"
+                              ? routes["route 1"]
+                                  .map((e) => DropdownMenuItem<String>(
+                                      value: e, child: Text(e)))
+                                  .toList()
+                              : routes[_routeController.text]
+                                  .map((e) => DropdownMenuItem<String>(
+                                      value: e, child: Text(e)))
+                                  .toList(),
+                          onChanged: (val) {
+                            print(val);
+                            _selectedStop = val;
+                            _registerBloc.add(RegisterStopChanged(stop: val));
+                          },
+                        )
+                      : Container(),
                   _typeController.text == "driver"
                       ? TextFormField(
                           controller: _driverCodeController,
@@ -197,7 +221,8 @@ class _LoginFormState extends State<RegisterForm> {
                                     _driverCodeController.text) ==
                                 true) {
                           _onFormSubmitted();
-                        } else if (_typeController.text == "student") {
+                        } else if (_typeController.text == "student" &&
+                            _selectedStop != null) {
                           _onFormSubmitted();
                         }
                       }
@@ -235,20 +260,22 @@ class _LoginFormState extends State<RegisterForm> {
         .add(RegisterUsernameChanged(username: _usernameController.text));
   }
 
-  void _onRouteChange() {
-    _registerBloc.add(RegisterRouteChanged(route: _routeController.text));
-  }
-
   void _onTypeChange() {
     _registerBloc.add(RegisterTypeChanged(type: _typeController.text));
   }
 
+  void _onRouteChange() {
+    _registerBloc.add(RegisterRouteChanged(route: _routeController.text));
+  }
+
   void _onFormSubmitted() {
+    print("From submitted: $_selectedStop");
     _registerBloc.add(RegisterSubmitted(
         email: _emailController.text,
         password: _passwordController.text,
-        route: _routeController.text,
+        route: _routeController.text ?? "",
         username: _usernameController.text,
+        stop: _selectedStop ?? "",
         type: _typeController.text));
   }
 }

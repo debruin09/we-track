@@ -4,16 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class MyNotification {
   String alert;
   String id;
+  String date;
+  String route;
   MyNotification({
     this.alert,
     this.id,
+    this.date,
+    this.route,
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'alert': alert,
-      'id': id,
-    };
+    return {'alert': alert, 'id': id, 'date': date, 'route': route};
   }
 
   factory MyNotification.fromMap(Map<String, dynamic> map) {
@@ -27,9 +28,10 @@ class MyNotification {
 
   static MyNotification fromSnapshot(DocumentSnapshot snap) {
     return MyNotification(
-      id: snap.documentID,
-      alert: snap.data['alert'] ?? "",
-    );
+        date: snap.data["date"],
+        id: snap.documentID,
+        alert: snap.data['alert'] ?? "",
+        route: snap.data['route']);
   }
 
   @override

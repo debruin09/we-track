@@ -4,6 +4,7 @@ import 'package:we_track/blocs/authentication_bloc/authentication_state.dart';
 import 'package:we_track/blocs/simple_bloc_observer.dart';
 import 'package:we_track/injection.dart';
 import 'package:we_track/repositories/user_repository.dart';
+import 'package:we_track/screens/chat/chat_screen.dart';
 import 'package:we_track/screens/driver_menu_screen.dart';
 import 'package:we_track/screens/landing_screen.dart';
 import 'package:we_track/screens/login/login_screen.dart';
@@ -19,7 +20,6 @@ void main() {
 
   /// This is the dependancy injection locator that needs to be set up
   setupLocator();
-
 
   ///This will start the app]
   ///When the app starts it will call the authentication bloc which will add the authentication started event
@@ -60,9 +60,7 @@ class MyApp extends StatelessWidget {
             return LoginScreen(
               userRepository: _userRepository,
             );
-          }
-
-          if (state is AuthenticationSuccess) {
+          } else if (state is AuthenticationSuccess) {
             if (state.user.type == "student") {
               return StudentMenuScreen(user: state.user);
             } else {
@@ -70,6 +68,8 @@ class MyApp extends StatelessWidget {
                 user: state.user,
               );
             }
+          } else if (state is AuthenticationInitial) {
+            return LandingScreen();
           }
 
           return LandingScreen();
